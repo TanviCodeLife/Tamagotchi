@@ -1,9 +1,9 @@
 export class Tamagotchi {
   constructor(name) {
     this.name = name;
-    this.maxSleepLevel = 200;
+    this.maxSleepLevel = 100;
     this.maxFoodLevel = 150;
-    this.maxPlayLevel = 100;
+    this.maxPlayLevel = 200;
     this.hunger = 5;
     this.sleep = 10;
     this.play = 2;
@@ -12,9 +12,9 @@ export class Tamagotchi {
     this.currentPlayLevel = this.maxPlayLevel;
     this.gameLevel = 0;
     this.gameOver = false;
-    this.feedInterval = null;
-    this.sleepInterval = null;
-    this.playInterval = null;
+    // this.feedInterval = null;
+    // this.sleepInterval = null;
+    // this.playInterval = null;
   }
 
   feed(hunger){
@@ -28,7 +28,11 @@ export class Tamagotchi {
   }
 
   hungry(hunger){
-    this.feedInterval = setInterval(() => {
+    let feedInterval = setInterval(() => {
+      if(this.gameOver){
+        clearInterval(feedInterval);
+      }
+      else{
       if(this.currentFoodLevel > 0){
         this.currentFoodLevel -= hunger;
         document.getElementById("fmessage").textContent = `Tamagotchi fed and current food val: ${this.currentFoodLevel}`;
@@ -36,8 +40,9 @@ export class Tamagotchi {
       }
       else {
         console.log(" feed - Tamagotchi dead");
-        return this.gameOver = true;
+        this.gameOver = true;
       }
+    }
     }, 2000);
   }
 
@@ -51,7 +56,11 @@ export class Tamagotchi {
   }
 
   tired(sleep){
-    this.sleepInterval = setInterval(() => {
+    let sleepInterval = setInterval(() => {
+      if(this.gameOver){
+        clearInterval(sleepInterval);
+      }
+      else {
       if(this.currentSleepLevel > 0){
         this.currentSleepLevel -= sleep;
         document.getElementById("sMessage").textContent = `Tamagotchi slept and current sleep level val: ${this.currentSleepLevel}`;
@@ -59,9 +68,10 @@ export class Tamagotchi {
       }
       else {
         console.log("sleep - Tamagotchi dead!!");
-        return this.gameOver = true;
+        this.gameOver = true;
       }
-    }, 3000);
+    }
+    }, 1000);
   }
 
   happy(play){
@@ -74,23 +84,22 @@ export class Tamagotchi {
   }
 
   sad(play){
-    this.playInterval = setInterval(() => {
-      if(this.currentPlayLevel > 0){
-        this.currentPlayLevel -= play;
-        document.getElementById("pmessage").textContent = `Tamagotchi played and current play level val: ${this.currentPlayLevel}`;
-        console.log("play " + this.currentPlayLevel);
+    let playInterval = setInterval(() => {
+      if(this.gameOver){
+        clearInterval(playInterval);
       }
-      else {
-        console.log("play - Tamagotchi dead!");
-        return this.gameOver = true;
+      else{
+        if(this.currentPlayLevel > 0){
+          this.currentPlayLevel -= play;
+          document.getElementById("pmessage").textContent = `Tamagotchi played and current play level val: ${this.currentPlayLevel}`;
+          console.log("play " + this.currentPlayLevel);
+        }
+        else {
+          console.log("play - Tamagotchi dead!");
+          this.gameOver = true;
+        }
       }
-    }, 1000);
+    }, 500);
   }
 
-  gameOver(){
-    if(this.gameOver)
-    clearInterval(this.sleepInterval);
-    clearInterval(this.playInterval);
-    clearInterval(this.feedInterval);
-  }
 }

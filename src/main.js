@@ -36,5 +36,5 @@ $(document).ready(function() {
   newTamagotchi.happy(newTamagotchi.play);
   document.getElementById("pmessage").textContent = `Tamagotchi played and current play level val: ${newTamagotchi.currentPlayLevel}`;
 }
-  newTamagotchi.gameOver();
+  // newTamagotchi.gameOver();
 });
