@@ -1,3 +1,4 @@
+
 export class Tamagotchi {
   constructor(name) {
     this.name = name;
@@ -12,9 +13,6 @@ export class Tamagotchi {
     this.currentPlayLevel = this.maxPlayLevel;
     this.gameLevel = 0;
     this.gameOver = false;
-    // this.feedInterval = null;
-    // this.sleepInterval = null;
-    // this.playInterval = null;
   }
 
   feed(hunger){
@@ -102,4 +100,19 @@ export class Tamagotchi {
     }, 500);
   }
 
+  getMoodGif(mood) {
+    return new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest();
+      let url = `http://api.giphy.com/v1/gifs/search?q=${mood}&api_key=E0NfURlddZ2EKmbKrAcxyAMOrFvYsSb9&limit=5`
+      request.onload = function() {
+        if(this.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(Error(request.statusText));
+        }
+      }
+      request.open("GET", url, true);
+      request.send();
+    });
+  }
 }

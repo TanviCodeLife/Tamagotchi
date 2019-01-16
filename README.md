@@ -37,6 +37,8 @@ Facebook's Farmville game clone application.
 * Install Node.js
 * Install karma-cli globally: `npm install -g karma-cli`
 * Go to GitHub profile and clone the repo from [Super Galactic Age Calculator](https://github.com/TanviCodeLife/galactic-age-calculator-JS.git). Use `git clone <project url>` command to pull it to a local repository in your Home directory.
+* Obtain API key where applicable and assign to `API_KEY` variable in .env.
+* Now place reference to this variable using `process.env.API_KEY` into the API link.
 *  Navigate to root of project directory
 * `npm install` to install dependencies
 * `npm run start` to build and start the dev server
